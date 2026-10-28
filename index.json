@@ -12,13 +12,26 @@
       ],
       "icon": "MicrophoneIcon",
       "channels": {
-        "latest": "1.0.0"
+        "latest": "1.1.0"
       },
       "versions": {
         "1.0.0": {
           "url": "https://raw.githubusercontent.com/tovade/revengeplugin/valenced-pool/pool/dziurwa.custom-voice-messages@1.0.0.zip",
           "sha256": "3bd8e1632856d262f2d3680129027f8688ea8c1ee647c9923c458641aa38217b",
           "size": 2058,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        },
+        "1.1.0": {
+          "url": "https://raw.githubusercontent.com/tovade/revengeplugin/valenced-pool/pool/dziurwa.custom-voice-messages@1.1.0.zip",
+          "sha256": "139c2b9c11e1f52ee2e085b297e3489ed9a4c0c06c257f649d05644dea21d848",
+          "size": 2391,
           "dependencies": {
             "valenced.api": {
               "version": ">=1 <2"
