@@ -6,7 +6,7 @@
 	"icon": "MicrophoneIcon",
 	"author": "Dziurwa <1034579679526526976>",
 	"contributors": ["シグマ siguma <737597276339437578>"],
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"dependencies": {
 		"valenced.api": { "version": ">=1 <2" },
 		"discord": { "version": "*" }
