@@ -1,0 +1,34 @@
+{
+  "format": 1,
+  "name": "revengeplugin (Valenced)",
+  "description": "Valenced ports of shipwr3ckd's revengeplugin plugins.",
+  "plugins": {
+    "dziurwa.custom-voice-messages": {
+      "name": "Custom Voice Messages",
+      "description": "Allows sending any audio as a voice message.",
+      "author": "Dziurwa <1034579679526526976>",
+      "contributors": [
+        "シグマ siguma <737597276339437578>"
+      ],
+      "icon": "MicrophoneIcon",
+      "channels": {
+        "latest": "1.0.0"
+      },
+      "versions": {
+        "1.0.0": {
+          "url": "https://raw.githubusercontent.com/tovade/revengeplugin/valenced-pool/pool/dziurwa.custom-voice-messages@1.0.0.zip",
+          "sha256": "3bd8e1632856d262f2d3680129027f8688ea8c1ee647c9923c458641aa38217b",
+          "size": 2058,
+          "dependencies": {
+            "valenced.api": {
+              "version": ">=1 <2"
+            },
+            "discord": {
+              "version": "*"
+            }
+          }
+        }
+      }
+    }
+  }
+}
