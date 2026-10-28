@@ -1,12 +1,23 @@
 # Custom Voice Messages (Valenced port)
 
-Port of [shipwr3ckd/revengeplugin `customVoiceMessages`](https://github.com/shipwr3ckd/revengeplugin/tree/master/plugins/customVoiceMessages) from the old Vendetta/Revenge API to the Valenced plugin API.
+Port of [`plugins/customVoiceMessages`](../../../plugins/customVoiceMessages) from the old Vendetta/Revenge API to the Valenced plugin API.
 
-## Building
+## Installing
 
-1. Clone the [Valenced plugin template](https://github.com/Valenced/valenced-plugin-template) and run `bun install` (or `npm install`).
-2. Copy this folder into the template's `plugins/` directory.
-3. Package it: `./gradlew packageCustomVoiceMessages`. The ZIP lands in `build/dist/`.
+Add this repository in Valenced (**Settings > Valenced > Plugins**, settings gear, add repository):
+
+```
+https://raw.githubusercontent.com/tovade/revengeplugin/valenced-pool/index.json
+```
+
+Then install **Custom Voice Messages** from **Browse Plugins**.
+
+## Building and releasing
+
+`valenced/` is a copy of the [Valenced plugin template](https://github.com/Valenced/valenced-plugin-template). From that folder:
+
+- `bun install`, then `./gradlew packageCustomVoiceMessages` builds the ZIP into `build/dist/`.
+- Bumping `version` in `manifest.json` and pushing makes the "Release Valenced plugins" workflow publish it to the `valenced-pool` branch and regenerate `index.json`.
 
 ## What changed in the port
 

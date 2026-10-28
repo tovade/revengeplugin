@@ -1,0 +1,74 @@
+# Builds the Valenced plugins in valenced/ and publishes them as a Valenced plugin repository.
+# Adapted from https://github.com/Valenced/valenced-plugin-template.
+#
+# A plugin is released when the pool doesn't have `<id>@<version>.zip` for its manifest version yet,
+# so bump `version` in a plugin's manifest.json to publish it.
+#
+# The pool and index.json live on their own branch (not gh-pages, which the Vendetta deploy overwrites)
+# and are served from raw.githubusercontent.com. Add this URL in Valenced:
+#   https://raw.githubusercontent.com/<owner>/<repo>/valenced-pool/index.json
+
+name: Release Valenced plugins
+
+on:
+  push:
+    branches: [master, valenced-port]
+    paths:
+      - valenced/**
+      - .github/scripts/valenced/**
+      - .github/workflows/valenced-release.yml
+  workflow_dispatch:
+
+concurrency:
+  group: valenced-pool
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  POOL_BRANCH: ${{ vars.VALENCED_POOL_BRANCH || 'valenced-pool' }}
+  PAGES_BASE_URL: ${{ vars.VALENCED_BASE_URL || format('https://raw.githubusercontent.com/{0}/{1}', github.repository, vars.VALENCED_POOL_BRANCH || 'valenced-pool') }}
+  POOL_REMOTE: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+  PLAN: ${{ github.workspace }}/releases.json
+
+defaults:
+  run:
+    working-directory: valenced
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Existing tags, so a re-run doesn't try to recreate one.
+
+      - uses: oven-sh/setup-bun@v2
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - run: bun install
+
+      - name: Check out the published pool
+        run: ../.github/scripts/valenced/checkout-pool.sh
+
+      - name: Plan releases
+        id: plan
+        run: ../.github/scripts/valenced/plan-releases.sh
+
+      - name: Build plugins
+        if: steps.plan.outputs.count != '0'
+        run: ./gradlew --no-daemon packageAllPlugins
+
+      - name: Publish to the pool
+        if: steps.plan.outputs.count != '0'
+        run: ../.github/scripts/valenced/publish-pool.sh
+
+      - name: Tag and write changelogs
+        if: steps.plan.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ../.github/scripts/valenced/tag-releases.sh
